@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Marcus\\Documents\\Estudo\\AspNet5\\RestWithASP-NET5\\RestWithASP-NET5\\ApiREST\\ApiREST.csproj",
+      "projectUniqueName": "C:\\Users\\Marcus\\Documents\\Estudo\\AspNet5\\Calculadora\\Calculadora\\ApiREST\\ApiREST.csproj",
       "projectName": "ApiREST",
-      "projectPath": "C:\\Users\\Marcus\\Documents\\Estudo\\AspNet5\\RestWithASP-NET5\\RestWithASP-NET5\\ApiREST\\ApiREST.csproj",
+      "projectPath": "C:\\Users\\Marcus\\Documents\\Estudo\\AspNet5\\Calculadora\\Calculadora\\ApiREST\\ApiREST.csproj",
       "packagesPath": "C:\\Users\\Marcus\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Marcus\\Documents\\Estudo\\AspNet5\\RestWithASP-NET5\\RestWithASP-NET5\\ApiREST\\obj\\",
+      "outputPath": "C:\\Users\\Marcus\\Documents\\Estudo\\AspNet5\\Calculadora\\Calculadora\\ApiREST\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Marcus\\AppData\\Roaming\\NuGet\\NuGet.Config",
