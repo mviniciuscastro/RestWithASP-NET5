@@ -1,4 +1,7 @@
 ﻿using ApiREST.Model;
+using ApiREST.Model.Context;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,61 +12,95 @@ namespace ApiREST.Services.Implementations
 {
     public class PessoaServiceImplementation : IPessoaService
     {
-        public Pessoa Create(Pessoa pessoa)
+        private MySQLContext _context;
+        
+        public PessoaServiceImplementation(MySQLContext context)
         {
-            return pessoa;
+            _context = context;
         }
 
-        public void Delete(long id)
-        {
-            
-        }
-
+      
         public List<Pessoa> FindAll()
         {
-            List<Pessoa> pessoas = new List<Pessoa>();
-            for (int i = 0; i < 8; i++)
-            {
-                Pessoa pessoa = MockPessoa(i);
-                pessoas.Add(pessoa);
-
-            }
-                return pessoas;
-        }
-
-        private volatile int count;
-        private Pessoa MockPessoa(int i)
-        {
-            return new Pessoa
-            {
-                Id = IncrementGet(),
-                PrimeiroNome = "nome" + i,
-                SobreNome = "sobrenome" + i,
-                Endereco = "Santos" + i,
-                Sexo = "Masculino" + i
-            };
-        }
-
-        private long IncrementGet()
-        {
-           return Interlocked.Increment(ref count);
+            
+                return _context.Pessoas.ToList();
         }
 
         public Pessoa FindByID(long id)
         {
-            return new Pessoa
+            return _context.Pessoas.SingleOrDefault(p => p.Id.Equals(id));
+        }
+
+        public Pessoa Create(Pessoa pessoa)
+        {
+            try
             {
-                Id = IncrementGet(),
-                PrimeiroNome = "Marcus",
-                SobreNome = "Castro",
-                Endereco = "Santos",
-                Sexo = "Masculino"
-            };
+                _context.Add(pessoa);
+                _context.SaveChanges();
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return pessoa;
         }
 
         public Pessoa Update(Pessoa pessoa)
         {
+            if (!Exists(pessoa.Id)) return new Pessoa();
+            var result = _context.Pessoas.SingleOrDefault(p => p.Id.Equals(pessoa.Id));
+
+            if (result != null)
+            {
+
+
+                try
+                {
+                    _context.Entry(result).CurrentValues.SetValues(pessoa);
+                    _context.SaveChanges();
+
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                
+            }
             return pessoa;
+
+        }
+
+        public void Delete(long id)
+        {
+
+            var result = _context.Pessoas.SingleOrDefault(p => p.Id.Equals(id));
+
+            if (result != null)
+            {
+
+
+                try
+                {
+                    _context.Pessoas.Remove(result);
+                    _context.SaveChanges();
+
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+
+            }
+
+        }
+
+        private bool Exists(long id)
+        {
+            return _context.Pessoas.Any(p => p.Id.Equals(id));
         }
     }
 }
